@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_app/dice_roller.dart';
 import 'package:second_app/styled_text.dart';
 
 // Muuttuja    operaatio   muuttujan arvo
@@ -64,20 +65,15 @@ class GradientContainer extends StatelessWidget {
             end: endAlignment // ctrl + alt
             ),
       ), // ctrl + välilyönti
-      child: Center(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images/d1.png',
-              width: 200,
-            ),
-            TextButton(onPressed: onPressed, child: child)
-          ],
-        ),
+      child: const Center(
+        child: DiceRoller(),
         // ctrl + spacebar
       ),
     );
   }
 }
+
+//row ja column widgetit. columniinvoi laittaa usemamman widgetit päällekkäin ja row vierekkäin
 //shift+alt+F
 // Harjoitus: muokkaa GradientContainer ottamaan vastaan kaksi väriä(color).
+//1. anonyymi funktio/ anonymous fuction:() {}
