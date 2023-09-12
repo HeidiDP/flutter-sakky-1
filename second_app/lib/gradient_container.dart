@@ -65,13 +65,19 @@ class GradientContainer extends StatelessWidget {
             ),
       ), // ctrl + välilyönti
       child: Center(
-          child: Image.asset(
-        'assets/images/d1.png',
-        width: 200,
-      ) // ctrl + spacebar
-          ),
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/images/d1.png',
+              width: 200,
+            ),
+            TextButton(onPressed: onPressed, child: child)
+          ],
+        ),
+        // ctrl + spacebar
+      ),
     );
   }
 }
-
+//shift+alt+F
 // Harjoitus: muokkaa GradientContainer ottamaan vastaan kaksi väriä(color).
