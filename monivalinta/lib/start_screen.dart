@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 
 class StartScreen extends StatelessWidget{
-const StartScreen({super.key});//constructori on samanniminen kuin luokka
+  //constructori on samanniminen kuin luokka
+const StartScreen(this.startQuiz, {super.key});//funktion pointteri on tässä
+
+//luokkamuuttua/property
+final void Function() startQuiz; //tämä on kytkettynä yllä olevaan this.startQi
 
   @override
   Widget build(context) {
@@ -35,7 +39,7 @@ const StartScreen({super.key});//constructori on samanniminen kuin luokka
             height: 50,
           ),
           OutlinedButton.icon(
-            onPressed: (){},
+            onPressed: startQuiz,
            style:OutlinedButton.styleFrom(
             foregroundColor: Colors.black,
            ),
