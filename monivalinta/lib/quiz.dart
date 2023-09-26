@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:monivalinta/data/questions.dart';
 import 'package:monivalinta/question_screen.dart';
 import 'package:monivalinta/start_screen.dart';
+import 'package:monivalinta/results_screen.dart';
+
 //Widget
 class Quiz extends StatefulWidget{
 const Quiz({super.key});
@@ -23,7 +26,7 @@ class QuizState extends State<Quiz>{
 //     super.initState();
 //     activeScreen =  StartScreen(switchScreen);
 //   }
-
+ List<String> selectedAnswers = [];
 var activeScreen = 'start-screen';
 
 //funktio
@@ -34,9 +37,22 @@ void switchScreen(){
     activeScreen = 'question-screen';
     },
   );
+  
+}
+void chooseAnswer(String answer){
+    selectedAnswers.add (answer);
+// kun lisätään käyttäjän vastauksiin uusi vastaus, tarkistetaan onko kaikki vastaukset annettu
+if(selectedAnswers.length == questions.length){
+  setState(() {
+    selectedAnswers = [];  //tai selectedAnswers.clear();
+    activeScreen = 'results-screen';
+  });
+  
 }
 
+  }
   @override
+
 Widget build(context){
 
 //tässä välissä voi suorittaa koodia, tässä ratkaistaan mitä sivua näytetään
@@ -44,7 +60,9 @@ Widget build(context){
 Widget screenWidget = StartScreen(switchScreen);
 
 if (activeScreen == 'question-screen') {
- screenWidget = const QuestionScreen();
+ screenWidget =  QuestionScreen(onSelectAnswer: chooseAnswer,);
+} else if (activeScreen =='results-screen'){
+  screenWidget = ResultsScreen(chosenAnswers: selectedAnswers);
 }
 
   return MaterialApp(
