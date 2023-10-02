@@ -21,7 +21,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 var currrentQuestionIndex = 0;
 
 void answerQuestion(String selectedAnswer){
-  widget.onSelectAnswer('answer');
+  widget.onSelectAnswer(selectedAnswer);
   
   setState(() {
     //eli aina alkuun ennen suoritusta tulee 0 ja sen jälkeen suoritetaan joten lisätään  1 joka suoritukselle

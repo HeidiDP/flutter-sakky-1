@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monivalinta/data/questions.dart';
+import 'package:monivalinta/questions_summary/questions_summary.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key, required this.chosenAnswers});
@@ -15,7 +16,7 @@ summary.add({
   'question': questions[i].text,
   'correct_answer': questions[i].answers[0],
   'user_answer':chosenAnswers[i]
-})
+});
 
 }
     return summary;
@@ -23,6 +24,15 @@ summary.add({
 
   @override
   Widget build(BuildContext context) {
+//luodaan muuttujat jossan onkaikkien kysymysten lukumäärä ja oikeiden vastausten lukumäärä
+    final summaryData = getSummaryData();
+    final numTotalQuestions = questions.length;
+    final numCorrectquestions = summaryData.where((elementData){
+        //where funktio sisällä pitää suorittaa funktio joka palauttaa true tai false(vertailuoperaatio)
+      
+        return elementData['user_answer'] == elementData['correct_answer'];  //tässä tulee vastaus näytölle montako kysymystä oli oikein
+    },);
+  
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -30,11 +40,14 @@ summary.add({
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('you answered X out of Y questions correctly!'),
+             Text('you answered ${numCorrectquestions.length} out of $numTotalQuestions questions correctly!'),
             const SizedBox(
               height: 30,
               ),
-            const Text('List of answers and question here...'),
+              QuestionsSummary(
+                summaryData,
+                ),
+            
             const SizedBox(
               height: 30,
               ),

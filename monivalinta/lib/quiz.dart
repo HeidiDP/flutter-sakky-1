@@ -44,7 +44,7 @@ void chooseAnswer(String answer){
 // kun lisätään käyttäjän vastauksiin uusi vastaus, tarkistetaan onko kaikki vastaukset annettu
 if(selectedAnswers.length == questions.length){
   setState(() {
-    selectedAnswers = [];  //tai selectedAnswers.clear();
+   // selectedAnswers = [];  //tai selectedAnswers.clear();
     activeScreen = 'results-screen';
   });
   
