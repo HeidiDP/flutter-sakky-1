@@ -48,9 +48,18 @@ if(selectedAnswers.length == questions.length){
     activeScreen = 'results-screen';
   });
   
+  }
 }
 
-  }
+void restartQuiz(){
+  
+  setState((){
+    selectedAnswers = [];  //tyhjennetään vastauslista kun painetaan nappia refresh quiz(result screen sivu)
+    activeScreen = 'question:screen'; //palauttaa aloitussivun näkymän
+  });
+
+}
+
   @override
 
 Widget build(context){
@@ -62,7 +71,10 @@ Widget screenWidget = StartScreen(switchScreen);
 if (activeScreen == 'question-screen') {
  screenWidget =  QuestionScreen(onSelectAnswer: chooseAnswer,);
 } else if (activeScreen =='results-screen'){
-  screenWidget = ResultsScreen(chosenAnswers: selectedAnswers);
+  screenWidget = ResultsScreen(
+    chosenAnswers: selectedAnswers,
+    onRestart: restartQuiz,
+    );
 }
 
   return MaterialApp(
