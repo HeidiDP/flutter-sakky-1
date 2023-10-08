@@ -28,7 +28,7 @@ class _MovieCategoriesState extends State<MovieCategories> {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,  
-              children: [  //categoria lista tulostuu allekkain buttoneina
+              children: [  //categoria lista tulostuu allekkain buttoneina(for käytössä, looppaa niin monta kertaa kuin kategoriota on)
                 for (String category in categories)
              
                     Row(
