@@ -8,7 +8,8 @@ class ResultsScreen extends StatelessWidget {
    final List<String> chosenAnswers;
    final void Function() onRestart;
 
-   List<Map<String, Object>> getSummaryData(){
+   //List<Map<String, Object>> getSummaryData(){        tässä on toinen vaihtoehto, joko 11 tai 12 rivi
+    List<Map<String, Object>> get summaryData{
     final List<Map<String, Object>> summary = [];
 
 for (var i = 0; i < chosenAnswers.length; i++) {
@@ -26,13 +27,12 @@ summary.add({
   @override
   Widget build(BuildContext context) {
 //luodaan muuttujat jossan onkaikkien kysymysten lukumäärä ja oikeiden vastausten lukumäärä
-    final summaryData = getSummaryData();
+    //final summaryData =  getSummaryData();  tässä on kommentoitu koska jos käytät rivin 11 komentoa niin tarvitset tämän koodin rivillä 30
     final numTotalQuestions = questions.length;
-    final numCorrectquestions = summaryData.where((elementData){
+    final numCorrectquestions = summaryData.where(
         //where funktio sisällä pitää suorittaa funktio joka palauttaa true tai false(vertailuoperaatio)
-      
-        return elementData['user_answer'] == elementData['correct_answer'];  //tässä tulee vastaus näytölle montako kysymystä oli oikein
-    },);
+         (elementData) => elementData['user_answer'] == elementData['correct_answer'],  //tässä tulee vastaus näytölle montako kysymystä oli oikein
+    );
   
     return SizedBox(
       width: double.infinity,

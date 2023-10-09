@@ -6,10 +6,13 @@ class MovieCategories extends StatefulWidget {
 
   @override
   State<MovieCategories> createState() => _MovieCategoriesState();
+
+  //screenw
 }
 
 class _MovieCategoriesState extends State<MovieCategories> {
-   final List<String> categories = ['Draama', 'Kauhu', 'Komedia', 'Toiminta'];  //kategorioista tehty lista
+  //kategorioista tehty lista( indexeistä puhuttaessa nuo nimet on 0,1,2,3 indexit)
+   final List<String> categories = ['Draama', 'Kauhu', 'Komedia', 'Toiminta'];  
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _MovieCategoriesState extends State<MovieCategories> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,  
               children: [  //categoria lista tulostuu allekkain buttoneina(for käytössä, looppaa niin monta kertaa kuin kategoriota on)
-                for (String category in categories)
+                for (String category in categories)       
              
                     Row(
                       children: [

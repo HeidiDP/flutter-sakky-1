@@ -4,6 +4,9 @@ import 'package:monivalinta/question_screen.dart';
 import 'package:monivalinta/start_screen.dart';
 import 'package:monivalinta/results_screen.dart';
 
+//yksityistä luokkaa voi käyttää vain  sen filen sisällä jossa se on
+//yksityinen luokka _ luokan eteen, myös yksityisiä funktioita ja properteihin/metodeihin voi olla
+//julkisella luokalla voi olla yksityisiä osia
 //Widget
 class Quiz extends StatefulWidget{
 const Quiz({super.key});

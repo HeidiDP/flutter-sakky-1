@@ -53,7 +53,8 @@ void answerQuestion(String selectedAnswer){
             const SizedBox(height: 30),
     
             //alla on kolme pistettä, spread operaatio->purkaa listan widgettejä ->kaikki mitä sieltä löytyy
-            ...currentQuestion.getShuffledAnswers().map((item) {      //map funktio käy läpi datan listasta jokaisen listan string tekstin(data/question.dart sivun tekstin)
+            // ...currentQuestion.getShuffledAnswers().map((item) {   tässä alkuperäienn vaihtoehto ja rivillä 56 toinen vaihtoehto
+            ...currentQuestion.shuffledAnswers.map((item) {      //map funktio käy läpi datan listasta jokaisen listan string tekstin(data/question.dart sivun tekstin)
               return AnswerButton(
                 answerText: item,
                 onTap: (){answerQuestion(item);});
