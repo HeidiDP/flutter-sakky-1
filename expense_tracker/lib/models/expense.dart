@@ -10,10 +10,10 @@ const uuid = Uuid(); //luodaan objekti joka tallennetaan muuttujaan, tämä pakk
 enum Category{food, travel, leisure, work}
 
 const categoryIcons = {
-  Category.food: Icon(Icons.lunch_dining), 
-  Category.travel: Icon(Icons.flight_takeoff),
-  Category.leisure: Icon(Icons.theater_comedy),
-  Category.work: Icon(Icons.business_center_outlined)};
+  Category.food: Icons.lunch_dining, 
+  Category.travel: Icons.flight_takeoff,
+  Category.leisure: Icons.theater_comedy,
+  Category.work: Icons.business_center_outlined};
 
 class Expense{
 Expense({required this.title, required this.amount, required this.date, required this.category}) //tämä on constructori .tarvitaan koska muuttujat vaatii tämän

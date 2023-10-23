@@ -24,7 +24,7 @@ class ExpenseItem extends StatelessWidget {
                   '${expense.amount.toStringAsFixed(2)}€'), //tostringasfixed korjaa desimaalit niin että niitä on vain 2
               const Spacer(),
               Row(children: [
-                categoryIcons[expense.category] as Icon,
+                Icon(categoryIcons[expense.category]),
                 const SizedBox(
                   width: 8,
                 ),
