@@ -7,6 +7,8 @@ import 'package:expense_tracker/models/expense.dart';
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
+  
+
   @override
   State<Expenses> createState() => _ExpensesState();
 }
@@ -29,7 +31,19 @@ final List<Expense> _registeredExpenses = [
 //tehdään funktio joka sijoitetaan appbarin add iconbuttoniin _ ->eteen on private funktio
 void _openAddExpenseOverlay(){
   //showmodal.. on funktio(meidän funktion sisällä)builden määrittelee miltä se visuaalisesti näyttää
-showModalBottomSheet(context: context, builder: (ctx)=> const NewExpense());
+showModalBottomSheet(
+  isScrollControlled: true,
+  context: context, 
+  builder: (ctx)=>  NewExpense(
+  onAddExpense: _addExpense));
+}
+
+void _addExpense(Expense expense){ //funktiolle annetaan parametrinä Expense expense 
+setState(() {
+  _registeredExpenses.add(expense);
+  
+});
+
 
 }
 
