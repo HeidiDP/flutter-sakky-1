@@ -35,7 +35,9 @@ class _QuizState extends State<Quiz> {
   // - Versio 2 -   ctrl +k + c = kommentit
 
   List<String> selectedAnswers = []; // State
-  var activeScreen = 'start-screen'; // Ei tarvitse null arvoa
+
+  int questionIndex = 0;
+  //var activeScreen = 'start-screen'; // Ei tarvitse null arvoa
 
   // _ voidaan laittaa myös properteihin ja metodeihin
   // Eli julkisella luokassa voi olla yksityisiä osia
@@ -43,23 +45,30 @@ class _QuizState extends State<Quiz> {
   // void _switchScreen() {
 
   // funktio
-  void switchScreen() {
+  void switchScreen(context, int tabIndex) {
     //  setState suorittaa build function uudestaan ja UI voi päivittyä
     setState(
       () {
         //activeScreen = const QuestionScreen();  -versio 1-
         activeScreen = 'question-screen';
+       final TabController oldController = DefaultTabController.of(context);
+       oldController.animateTo(tabIndex);
+       );
       },
     );
   }
 
-  void chooseAnswer(String answer) {
+  void chooseAnswer(String answer, int tabIndex, BuildContext ctx) {
+    questionIndex++;
     selectedAnswers.add(answer);
 
     // kun lisätään käyttäjän vastauksiin uusi vastaus, tarkistetaan onko kaikki
     // vastaukset annettu
     if (selectedAnswers.length == questions.length) {
       setState(() {
+
+      final TabController oldController = DefaultTabController.of(context);
+      oldController.animateTo(tabIndex);
         //selectedAnswers.clear();
         //selectedAnswers = []; Tyhjentää vastaukset, korjataan myöhemmin
         activeScreen = 'results-screen';
@@ -89,16 +98,9 @@ class _QuizState extends State<Quiz> {
     // Tässä ratkaistaan, mikä "sivu" näytetään
 
     // build funktion sisällä, ei ole ongelmaa käyttää switchScreen parametriä
-    Widget screenWidget = StartScreen(switchScreen);
+ 
 
-    if (activeScreen == 'question-screen') {
-      screenWidget = QuestionScreen(onSelectAnswer: chooseAnswer);
-    } else if (activeScreen == 'results-screen') {
-      screenWidget = ResultsScreen(
-        chosenAnswers: selectedAnswers,
-        onRestart: restartQuiz,
-      );
-    }
+    
 
     return MaterialApp(
       // 1. aloitus näkymä
@@ -128,7 +130,10 @@ class _QuizState extends State<Quiz> {
               ),
               child: TabBarView(children: [
                 StartScreen(switchScreen),
-                QuestionScreen(onSelectAnswer: chooseAnswer),
+                QuestionScreen(
+                  onSelectAnswer: chooseAnswer,
+                  currentIndex: quiestionIndex),
+                  
                 ResultsScreen(
                     chosenAnswers: selectedAnswers, onRestart: restartQuiz)
               ])

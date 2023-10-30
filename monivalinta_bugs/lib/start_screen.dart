@@ -5,7 +5,7 @@ class StartScreen extends StatelessWidget {
   const StartScreen(this.startQuiz, {super.key});
 
   // luokkamuuttuja / property
-  final void Function(int, BuildContext) startQuiz;
+  final void Function(int tabIndex, BuildContext ctx) startQuiz;
 
   @override
   Widget build(context) {
