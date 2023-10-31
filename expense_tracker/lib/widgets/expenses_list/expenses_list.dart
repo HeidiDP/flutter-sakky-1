@@ -14,10 +14,15 @@ class ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return  ListView.builder(
       itemCount: expenses.length,
-      itemBuilder: (ctx, index)=> 
+      itemBuilder: (ctx, index)=> Dismissible(
       //dismissible widget on pyyhkäisy tyyli jolla voi poistaa jo syötettyjä kuluja
-      Dismissible(
       key: ValueKey(expenses[index]),
+      background: Container(
+        color: Theme.of(context).colorScheme.onBackground.withOpacity(0.5),       //error olisi punainen väri, onBackground on tumma
+        margin: EdgeInsets.symmetric(
+          horizontal: Theme.of(context).cardTheme.margin!.horizontal  //huom ! luvataan että ko horizontal teema löytyy joten se on oltava määriteltynä
+        ),
+      ), 
       onDismissed:(direction){ onRemoveExpense(expenses[index]);
       },
       child: ExpenseItem(

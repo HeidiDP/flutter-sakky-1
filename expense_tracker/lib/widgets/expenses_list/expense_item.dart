@@ -14,12 +14,21 @@ class ExpenseItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(expense.title),
+            //contextilla voidaan hakea vanhempien objekteja
+            //Theme.of(contex) haetaan main sivulta
+            Text(expense.title, 
+            style: Theme.of(context)
+            .textTheme.
+            titleLarge!
+            .copyWith(letterSpacing: 2 )
+            ), 
             const SizedBox(
               height: 4,
             ),
-            Row(children: [
+            Row(
+              children: [
               Text(
                   '${expense.amount.toStringAsFixed(2)}€'), //tostringasfixed korjaa desimaalit niin että niitä on vain 2
               const Spacer(),

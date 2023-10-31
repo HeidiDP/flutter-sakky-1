@@ -112,6 +112,7 @@ class _NewExpenseState extends State<NewExpense> {
                     prefixText:
                         '€', //jos haluat dollarin kuvan niin escapetetaa dollarin merkki /$
                     label: Text('price'),
+                  
                   ),
                 ),
               ),
@@ -127,10 +128,12 @@ class _NewExpenseState extends State<NewExpense> {
                     Text(_selectedDate == null
                         ? 'SelectDate'
                         : formatter.format(
-                            _selectedDate!)), //tarvitsee ! merkin perään
+                            _selectedDate!),
+                            ), //tarvitsee ! merkin perään
                     IconButton(
                         onPressed: _presentDatePicker,
-                        icon: const Icon(Icons.calendar_month))
+                        icon: const Icon(Icons.calendar_month),
+                        )
                   ],
                 ),
               )

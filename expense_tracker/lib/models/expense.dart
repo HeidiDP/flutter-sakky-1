@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';   //tämä paketti lisättiin terminalin kautta
 //paketti sisältää uuid luokan josta luodaan alla objekti
 import 'package:intl/intl.dart';
 
-final formatter = DateFormat.yMd();
+final formatter = DateFormat('dMy');
 
 const uuid = Uuid(); //luodaan objekti joka tallennetaan muuttujaan, tämä pakko jotta sitä voidaan käyttää luokassa
 
@@ -29,4 +29,29 @@ Expense({required this.title, required this.amount, required this.date, required
   String get formattedDate{
     return formatter.format(date);
   }
+}
+//pitää sisällään kategorian ja kaikki sen kategorian ostokset
+class ExpenseBucket {
+  const ExpenseBucket({required this.category, required this.expenses});
+
+//suodatttaa listan ostoksia ja tallentaa vain oikean kategorian ostokset
+ExpenseBucket.forCategory(List<Expense> allExpenses, this.category) 
+: expenses = allExpenses.where((expense) => expense.category == category).toList();  //vertailuoperaatio säilytetäänkö vai ei
+
+final Category category;
+final List<Expense> expenses;
+
+//ostoksien summa
+double get totalExpenses{
+  double sum = 0;
+
+  //lasketaan summa
+//for(int i = 0; i < expenses.length; i++) {} -> tätä voisi käyttää myös
+for(final expense in expenses){
+
+sum += expense.amount;
+}
+  return sum;
+}
+
 }
