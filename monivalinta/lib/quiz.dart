@@ -69,7 +69,10 @@ Widget build(context){
 
 //tässä välissä voi suorittaa koodia, tässä ratkaistaan mitä sivua näytetään
 
-Widget screenWidget = StartScreen(switchScreen);
+Widget screenWidget = StartScreen(switchScreen); //tässä startscereen objekti käyttää switchscreen funktiota
+//tämä switchscreen funktion toiminta on määritelty tällä sivulla jossa sitä käytetään
+
+StartScreen((){});
 
 if (activeScreen == 'question-screen') {
  screenWidget =  QuestionScreen(onSelectAnswer: chooseAnswer,);

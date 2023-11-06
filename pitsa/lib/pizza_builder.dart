@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pitsa/Models/ingredient.dart';
+import 'package:pitsa/models/ingredient.dart';
 import 'package:pitsa/select_ingredients.dart';
 
 
