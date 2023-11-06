@@ -123,3 +123,6 @@ if (_registeredExpenses.isNotEmpty){
 //nämä määrittävät widgetin koon, contstrai tarkoittaa vanhemman rajoituksia lapseille
 //preferences tarkoittaa widgetin omaa käyttäytymistä
 //jokaisella widgetillä on sen omat preferences(kuinka haluaa asettua) ja sen constraints sen lapsille(rajoitukset näille)
+//jos vanhempi widget esim column ja sillä lapsi esim litview
+//column ei rajoita sen lapsien korkeutta ja listview prefrences on ääretön korkeus
+// Lopputuloksena on ääretön kokrkeus listview widgetille joka on mahdoton toteuttaa
