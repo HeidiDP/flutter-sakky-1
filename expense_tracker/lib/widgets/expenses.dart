@@ -2,12 +2,11 @@ import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart'; 
+import 'package:expense_tracker/widgets/chart/chart.dart';
 
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
-
-  
 
   @override
   State<Expenses> createState() => _ExpensesState();
@@ -15,6 +14,7 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
 
+//tässä on lista tuotteista
 final List<Expense> _registeredExpenses = [
   Expense(
     title: 'Vöner 300g', 
@@ -53,6 +53,8 @@ setState(() {
 //poiston peruutus
 ScaffoldMessenger.of(context).clearSnackBars();
 ScaffoldMessenger.of(context).showSnackBar(
+  //snackbar on tapa ilmoittaa käyttjälle viestejä
+  //tässsä annetaan ilmoitus ostoksen poistosta ja nappi jolla ostos voidaan palauttaa
   SnackBar(
     duration: const Duration(seconds: 3),
     content: const Text('Expense deleted.'),
@@ -69,6 +71,10 @@ ScaffoldMessenger.of(context).showSnackBar(
 
   @override
   Widget build(BuildContext context) {
+    //näytön leveyttä ja korkeuttavoidaan katsella tällä luokalla/se on osa materialappia
+    //print(MediaQuery.of(context).size.width);
+   // print(MediaQuery.of(context).size.height);
+   final width = MediaQuery.of(context).size.width;
 
 Widget mainContent = const Center(
   child: Text('No Expenses found. Start adding some!'),
@@ -85,14 +91,35 @@ if (_registeredExpenses.isNotEmpty){
         title:const Text('Flutter ExpenseTracker'),
         actions: [IconButton(onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add))],
       ),
-      body: Column(
+      //tutkitaan laitteen leveys ja sen perusteella luodaan column tai row ternaryoperaation avulla eli alla ? ja row :
+      body: width < 600 ? 
+      Column(
+        //TRUE ->päällekkäin
         children: [
-    const Text('chart goes here'),
+    //const Text('chart goes here'),
+    Chart(expenses: _registeredExpenses), //tässä on luokan parametri eli tähän charttiin tulee lista tuotteista
           Expanded(
             child: mainContent,
             ),
-        ],
+        ],      
+      )
+       :  Row(
+       // FALSE ->vierekkäin
+        children: [
+    //const Text('chart goes here'),
+          Expanded(
+             child: Chart(expenses: _registeredExpenses),
+             ), 
+          Expanded(
+            child: mainContent,
+            ),
+        ],      
       ),
     );
   }
 }
+
+//jsize constraint ja preferences widgeteillä ,
+//nämä määrittävät widgetin koon, contstrai tarkoittaa vanhemman rajoituksia lapseille
+//preferences tarkoittaa widgetin omaa käyttäytymistä
+//jokaisella widgetillä on sen omat preferences(kuinka haluaa asettua) ja sen constraints sen lapsille(rajoitukset näille)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
 
 var kColorSceme = ColorScheme.fromSeed(
@@ -12,7 +13,18 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 );
 
 void main() {
-  runApp(  MaterialApp(
+ /* WidgetsFlutterBinding.ensureInitialized();
+  //alla on responsiivisuuteen liittyvä luokka jossa funktio setPreferred....
+SystemChrome.setPreferredOrientations([
+  //tehdään lista objekteja alle (jätetään kommentteihin osa näistä)
+ // DeviceOrientation.portraitDown,
+  DeviceOrientation.portraitUp,
+ // DeviceOrientation.landscapeLeft,
+]).then((fn) => */
+
+runApp(  //nuolifunktio
+
+ MaterialApp(
     darkTheme: ThemeData().copyWith(useMaterial3: true,
     colorScheme: kDarkColorScheme,
     cardTheme: const CardTheme().copyWith(
@@ -76,5 +88,17 @@ void main() {
     home:const  Expenses(),
     ),
   );
+//);
 }
 
+// kertaus:
+// snackbar:  //snackbar on tapa ilmoittaa käyttjälle viestejä
+  //tässsä annetaan ilmoitus ostoksen poistosta ja nappi jolla ostos voidaan palauttaa
+// modal
+//käyttäjän syöte 3 eri vaihtoehtoa
+//käytäjän syötteen hallinta
+// dialog
+// context
+// appbar, iconbutton: tämä on nappi millä avataan näytön yläreunasta kulun lisäys kohta
+//listview: expenses eli listataan kulut allekkain
+//themes: mainissa vaalea ja tumma väri teema koko ohjelmassa
