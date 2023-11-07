@@ -30,3 +30,8 @@ class ExpensesList extends StatelessWidget {
     );   
   }
 }
+
+//Jos vanhempi widget kuten column ja sillä lapsi esim listvoiew. column ei rajoita sen lapsien korkeuut ja listview preferense
+//on ääretön korkeus. lopputuloksen aon ääretön korkeus listview widgetille joka on mahdoton toteuttaa 
+
+//vanhempi jolla on ääretön constrait 

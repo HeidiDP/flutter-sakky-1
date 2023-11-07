@@ -32,6 +32,7 @@ final List<Expense> _registeredExpenses = [
 void _openAddExpenseOverlay(){
   //showmodal.. on funktio(meidän funktion sisällä)builden määrittelee miltä se visuaalisesti näyttää
 showModalBottomSheet(
+  useSafeArea: true, //ei käytetä käyttöliittymän tilaa,kamera jne näytön yläosassa
   isScrollControlled: true,
   context: context, 
   builder: (ctx)=>  NewExpense(
@@ -88,6 +89,7 @@ if (_registeredExpenses.isNotEmpty){
 }
     return  Scaffold(
       appBar: AppBar(
+        centerTitle: true,// iOS oletus asetus
         title:const Text('Flutter ExpenseTracker'),
         actions: [IconButton(onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add))],
       ),
