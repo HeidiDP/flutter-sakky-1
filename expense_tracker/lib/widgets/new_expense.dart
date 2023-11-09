@@ -41,7 +41,7 @@ class _NewExpenseState extends State<NewExpense> {
       _selectedDate = pickedDate;
     });
   }
-
+  //DIALOG FUNKTIOT ALLA IOSILLE JA ANDROIDILLE
   // showDialog funktio näyttää joko iphonen tai androidin dialogin sen perusteella mikä on käyttöjärjestelmä
  void _showDialog(){
   if(Platform.isIOS){
@@ -120,6 +120,7 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    //ALLA ON KÄYTETTY MEDIAQUERYÄ
 //käytä mediaqueryä kun määritellään kokoja vaikka näppäimistölle ja välejä sinne että asettuisi paremmin näytölle
 //viewInsets käytetään tyypillisesti näppäimistön kanssa
 //että arvoa MediaQuery.of(context).viewInsets.bottom; voidaan käyttää, tulee se ottaa muuttujaan talteen(keyboardSpace muuttuja tässä)
@@ -133,7 +134,7 @@ return LayoutBuilder(builder: (ctx, constraints) {
 
  final width = constraints.maxWidth;
 
-
+//LISTAN SISÄINEN IF RAKENNE ALKAA ALLA  3 ERI RIVILLE TEHTY IF-ELSE LISTAN SISÄLLE
   return SizedBox( 
       height: double.infinity, //sizedboxilla paketoitiin vielä rullattava widget että asettuu paremmin näytölle korkeus ääretön
       child: SingleChildScrollView(  //rullattava näkymä widget, tällä paketoitiin tuo padding

@@ -23,7 +23,7 @@ SystemChrome.setPreferredOrientations([
 ]).then((fn) => */
 
 runApp(  //nuolifunktio
-
+//THEMES-> TÄÄLLÄ ON TEEMOJA MM VÄRITYS TUMMA/VAALEA JA ERILAISET TEKSTITYYLIT, INPUTTIEN VÄRI, IKONIEN/NAPPIEN VÄRIT JA TYYLIT
  MaterialApp(
     darkTheme: ThemeData().copyWith(useMaterial3: true,
     colorScheme: kDarkColorScheme,
@@ -92,13 +92,19 @@ runApp(  //nuolifunktio
 }
 
 // kertaus:
-// snackbar:  //snackbar on tapa ilmoittaa käyttjälle viestejä
+// snackbar: Expenses.dart tiedostossa käytössä-> snackbar on tapa ilmoittaa käyttjälle viestejä
   //tässsä annetaan ilmoitus ostoksen poistosta ja nappi jolla ostos voidaan palauttaa
 // modal
 //käyttäjän syöte 3 eri vaihtoehtoa
-//käytäjän syötteen hallinta
-// dialog
+//1. new_expense tiedostossa on käyttjän syötteitä johon kulun nimi, hinta syötetään, myös pvm valitaan ja pudotusvalikosta kulun tyyppi
+// 2. 
+//käytäjän syötteen hallinta: submitexpensedata funktio nappia painettaessa tarkistaa mitä käyttäjä on syöttänyt kenttiin
+// dialog: new_expense tiedosto, nämä on käyttöjärjestelmän valintaan liittyvät funtiot esim androidille oma ja ios oma dialog, /
+          //appi toimii sitten molemmissa kun nämä on huomioitu
+///
 // context
+// listan sisäinen if: new expense tiedosto
+//Mediaquery: new expense tiedostossa
 // appbar, iconbutton: tämä on nappi millä avataan näytön yläreunasta kulun lisäys kohta
-//listview: expenses eli listataan kulut allekkain
+//listview: expense_list tiedostossa käytössä, expenses eli listataan kulut allekkain
 //themes: mainissa vaalea ja tumma väri teema koko ohjelmassa

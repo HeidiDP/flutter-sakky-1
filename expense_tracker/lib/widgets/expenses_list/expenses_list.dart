@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 
 //tämä widget ottaa listan vastaan  ja generoi listan sen listan sisällöstä
-
+//LISTVIEW TÄÄLLÄ KÄYTÖSSÄ
 class ExpensesList extends StatelessWidget {
   const ExpensesList({super.key, required this.expenses, required this.onRemoveExpense,});
 
@@ -34,4 +34,3 @@ class ExpensesList extends StatelessWidget {
 //Jos vanhempi widget kuten column ja sillä lapsi esim listvoiew. column ei rajoita sen lapsien korkeuut ja listview preferense
 //on ääretön korkeus. lopputuloksen aon ääretön korkeus listview widgetille joka on mahdoton toteuttaa 
 
-//vanhempi jolla on ääretön constrait 

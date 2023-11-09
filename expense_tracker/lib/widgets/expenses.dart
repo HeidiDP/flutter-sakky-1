@@ -51,7 +51,7 @@ void _removeExpense(Expense expense){
 setState(() {
   _registeredExpenses.remove(expense);
 });
-//poiston peruutus
+//poiston peruutus //TÄÄLLÄ ON KÄYTÖSSÄ SNACKBAR ILMOITUS
 ScaffoldMessenger.of(context).clearSnackBars();
 ScaffoldMessenger.of(context).showSnackBar(
   //snackbar on tapa ilmoittaa käyttjälle viestejä
