@@ -27,7 +27,7 @@ final List<Expense> _registeredExpenses = [
     date: DateTime.now(), 
     category: Category.leisure)
 ];
-
+//TÄSSÄ AVAUTUU MODAL LEHTI KUN HALUTAAN LISÄTÄ KULU->APPBAR->ICON BUTTONIN TOIMINTA
 //tehdään funktio joka sijoitetaan appbarin add iconbuttoniin _ ->eteen on private funktio
 void _openAddExpenseOverlay(){
   //showmodal.. on funktio(meidän funktion sisällä)builden määrittelee miltä se visuaalisesti näyttää

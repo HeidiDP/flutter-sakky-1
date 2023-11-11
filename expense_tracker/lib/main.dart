@@ -94,14 +94,15 @@ runApp(  //nuolifunktio
 // kertaus:
 // snackbar: Expenses.dart tiedostossa käytössä-> snackbar on tapa ilmoittaa käyttjälle viestejä
   //tässsä annetaan ilmoitus ostoksen poistosta ja nappi jolla ostos voidaan palauttaa
-// modal
+// modal: kun painetaan lisää kulu plussaa niin aukeaa erilinen puolikas sivu jossa on
+//käyttäjän syötteet. tuo sivu on modal
 //käyttäjän syöte 3 eri vaihtoehtoa
 //1. new_expense tiedostossa on käyttjän syötteitä johon kulun nimi, hinta syötetään, myös pvm valitaan ja pudotusvalikosta kulun tyyppi
 // 2. 
 //käytäjän syötteen hallinta: submitexpensedata funktio nappia painettaessa tarkistaa mitä käyttäjä on syöttänyt kenttiin
 // dialog: new_expense tiedosto, nämä on käyttöjärjestelmän valintaan liittyvät funtiot esim androidille oma ja ios oma dialog, /
           //appi toimii sitten molemmissa kun nämä on huomioitu
-///
+//Platform main tiedostoss on käyttöjärjeselmä widget
 // context
 // listan sisäinen if: new expense tiedosto
 //Mediaquery: new expense tiedostossa
