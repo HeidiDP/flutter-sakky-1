@@ -42,6 +42,7 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
   //DIALOG FUNKTIOT ALLA IOSILLE JA ANDROIDILLE
+  //PLATFORM ON SE MIKÄ KÄYTTÖJÄRJESTLMÄ VALITTUNA
   // showDialog funktio näyttää joko iphonen tai androidin dialogin sen perusteella mikä on käyttöjärjestelmä
  void _showDialog(){
   if(Platform.isIOS){
