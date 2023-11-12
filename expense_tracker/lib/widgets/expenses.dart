@@ -28,6 +28,7 @@ final List<Expense> _registeredExpenses = [
     category: Category.leisure)
 ];
 //TÄSSÄ AVAUTUU MODAL LEHTI KUN HALUTAAN LISÄTÄ KULU->APPBAR->ICON BUTTONIN TOIMINTA
+//SAFEAREA ON ESIM KÄNNYKÄSSÄ NÄYTÖN YLÄOSA JOSSA KAMERA, KUN SE KÄYÖTSSÄ NIIN TEKSTIT YMS APIN JUTUT EI YLLÄ SINNE ASTI
 //tehdään funktio joka sijoitetaan appbarin add iconbuttoniin _ ->eteen on private funktio
 void _openAddExpenseOverlay(){
   //showmodal.. on funktio(meidän funktion sisällä)builden määrittelee miltä se visuaalisesti näyttää
@@ -77,6 +78,7 @@ ScaffoldMessenger.of(context).showSnackBar(
    // print(MediaQuery.of(context).size.height);
    final width = MediaQuery.of(context).size.width;
 
+//MAINCONTENT WIDGET, LISÄTYT KULUT
 Widget mainContent = const Center(
   child: Text('No Expenses found. Start adding some!'),
 );

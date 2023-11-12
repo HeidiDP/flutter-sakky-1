@@ -94,7 +94,8 @@ runApp(  //nuolifunktio
 // kertaus:
 // snackbar: Expenses.dart tiedostossa käytössä-> snackbar on tapa ilmoittaa käyttjälle viestejä
   //tässsä annetaan ilmoitus ostoksen poistosta ja nappi jolla ostos voidaan palauttaa
-// modal: kun painetaan lisää kulu plussaa niin aukeaa erilinen puolikas sivu jossa on
+  // Safearea expenses sivulla, ohjelma ei käytä esim puhelimen näytön yläreunaa jossa kamera
+// modal: expenses sivu: kun painetaan lisää kulu plussaa niin aukeaa erilinen puolikas sivu jossa on
 //käyttäjän syötteet. tuo sivu on modal
 //käyttäjän syöte 3 eri vaihtoehtoa
 //1. new_expense tiedostossa on käyttjän syötteitä johon kulun nimi, hinta syötetään, myös pvm valitaan ja pudotusvalikosta kulun tyyppi
@@ -104,8 +105,11 @@ runApp(  //nuolifunktio
           //appi toimii sitten molemmissa kun nämä on huomioitu
 //Platform main tiedostoss on käyttöjärjeselmä widget
 // context
+//maincontent: expenses filesta löytyy ko niminen widget, tässä näkyy tallennetut kulut
 // listan sisäinen if: new expense tiedosto
 //Mediaquery: new expense tiedostossa
 // appbar, iconbutton: tämä on nappi millä avataan näytön yläreunasta kulun lisäys kohta
 //listview: expense_list tiedostossa käytössä, expenses eli listataan kulut allekkain
+//Listview.builder: expenses_list tiedostossa, tähän liittyy childin ja aikuisen koot ja niiden käyttö, 
+//dismissible:expeses_list tiedostossa: pyyhäisy tyyli poistoon 
 //themes: mainissa vaalea ja tumma väri teema koko ohjelmassa
