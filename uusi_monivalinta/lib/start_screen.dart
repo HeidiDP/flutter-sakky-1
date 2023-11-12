@@ -6,7 +6,7 @@ class StartScreen extends StatelessWidget {
   final void Function() startQuiz;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return  Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -18,7 +18,7 @@ class StartScreen extends StatelessWidget {
 
        const  Text('Start screen',
           style: TextStyle(
-          color: Colors.blue,
+          color: Color.fromARGB(255, 98, 238, 4),
           fontSize: 28,
             ),
           ),
@@ -26,9 +26,9 @@ class StartScreen extends StatelessWidget {
         height: 50,
           ),
         OutlinedButton.icon(
-          onPressed: startQuiz, //TÄHÄN TULEE STARTQUIZ KUNHAN SE ON TEHTY
+          onPressed: startQuiz, // ALOIT
           style:OutlinedButton.styleFrom(
-            foregroundColor: Colors.black,
+            foregroundColor:const Color.fromARGB(255, 98, 238, 4),
            ),
            icon: const Icon(Icons.adb),
            label: const Text('Start Quiz'),

@@ -16,13 +16,37 @@ class Quiz extends StatefulWidget {
 class QuizState extends State<Quiz> {
 
   var activeScreen = 'start-screen';
+
+//funktio
+  void switchScreen(){
+    setState(() {
+      activeScreen = 'question-screen';
+     },
+    );
+  }
   
   @override
-  Widget build(BuildContext context) {
-    //aloitetaan materialapin rakentamisella
+  Widget build(context) {
+
+//tässä alla haetaan startscreen  objekti? jossa funktio? 
+////ja tallennetaan se screenwidgetiin
+    Widget screenWidget = StartScreen(switchScreen);
+
+    StartScreen(() {});
+    //Tee aluksi materialapp
     return   MaterialApp(
       home: Scaffold(
         body: Container(
+          decoration: const BoxDecoration(
+            gradient: RadialGradient(colors: [
+              Colors.pink,
+              Colors.yellow,
+            ],
+            )
+          ),
+          //KÄYTETÄÄN STARTSCREEN WIDGETTIÄ TÄSSÄ? joka on laitettu tällä sivulla 
+          //screenWidgettiin?
+          child: screenWidget,
 
         ),
       ),
