@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uusi_monivalinta/start_screen.dart';
+import 'package:uusi_monivalinta/data/questions.dart';
+import 'package:uusi_monivalinta/question_screen.dart';
+
 
 //statefulwidgetissä kaksi luokkaa (statea), vaihdettiin yksityinen luokka julkiseksi
 class Quiz extends StatefulWidget {
@@ -15,6 +18,7 @@ class Quiz extends StatefulWidget {
 //2. luokka state
 class QuizState extends State<Quiz> {
 
+  List<String> selectedAnswer =[];
   var activeScreen = 'start-screen';
 
 //funktio
@@ -23,6 +27,14 @@ class QuizState extends State<Quiz> {
       activeScreen = 'question-screen';
      },
     );
+  }
+  void chooseAnswer(String answer){
+    selectedAnswer.add(answer);
+    if( selectedAnswer.length = questions.length){
+      setState(() {
+        activeScreen = 'result-screen';
+      });
+    }
   }
   
   @override
@@ -33,6 +45,15 @@ class QuizState extends State<Quiz> {
     Widget screenWidget = StartScreen(switchScreen);
 
     StartScreen(() {});
+
+    if(activeScreen == 'question-screen'){
+      screenWidget = QuestionScreen(onSelectAnswer: 'choose-Answer',);
+    } else if (activeScreen = 'result-screen'){
+      screenWidget = ResultScreen(
+        chosenAnswer: selectedAnswer,
+        onRestart: restartQuiz,
+      );
+    }
     //Tee aluksi materialapp
     return   MaterialApp(
       home: Scaffold(
