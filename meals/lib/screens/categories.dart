@@ -3,12 +3,14 @@ import 'package:meals/data/dummy_data.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 import 'package:meals/models/category.dart';
+import 'package:meals/models/meal.dart';
 //tässä tehdään luokka mutta ei perinteisesti josssa luokka on saman niminen kuin file 
 //tullaan tekemään erilaisia screen widgettejä ja normi widgettejä, siksi nimetään eritavalla
 
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key, required this.onToggleFavorite});  //KETJUTUS WIDGETTIEN VÄLILLÄ ETTÄ SUOSIKKI NAPPI TOIMISI
+  final void Function(Meal meal) onToggleFavorite;
 
 //final activeScreen = 'start-screen';  ->tämä on movivalinnan vanha tapa vaihtaa näkymää
 
@@ -26,7 +28,10 @@ class CategoriesScreen extends StatelessWidget {
    // Navigator.push(context, route);
     Navigator.of(context).push(
       MaterialPageRoute(
-      builder:(ctx) => MealsScreen(title: category.title, meals: filteredMeals),
+      builder:(ctx) => MealsScreen(
+        title: category.title, 
+        meals: filteredMeals, 
+        onToggleFavorite: onToggleFavorite,), //TÄHÄN TARVITAAN KETJUTUKSETA VIELÄ PARAMETRI ontoggle...
        ),
      );
   }
@@ -44,12 +49,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //scaffold on erilainen eri näkymissä tässä apissa, joten näitä tulee useampi eri fileihin
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick your category'),
-      ),
-      //bodyosio on erivärisiä laatikoita näytöllä jossa lukee ericatekorioiden (nimiä gridview)
-      body: GridView(
+    return GridView(
         gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
         childAspectRatio: 3/2, //kuvasuhde
         crossAxisSpacing: 20,  //tyhjää tilaa laatikoiden välille
@@ -64,7 +64,6 @@ class CategoriesScreen extends StatelessWidget {
             _selectCategory(context, category); //tähän tulee syöttää funktio  joka tehty yllä, tämä on näkyvissä categories sivulla jossa se otetaan vastaan
           } ,)
         ],
-      ),
     );
   }
 }

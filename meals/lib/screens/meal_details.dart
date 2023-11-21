@@ -2,65 +2,85 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({super.key, required this.meal});
+  const MealDetailsScreen({super.key, required this.meal, required this.onToggleFavorite}); //NÄMÄ ON PARAMETREJA-> this.meal(mitä halutaan ottaa vastaan)
 
 final Meal meal;
+final void Function(Meal meal) onToggleFavorite; //TÄMÄ FUNKTIO LISÄTTY MYÖS TÄNNE(KETJUTUS)
 
   @override
   Widget build(BuildContext context) {
     return Scaffold (
       appBar:AppBar(
-      title: Text(meal.title), //haetaan meal objektista title
-    ),
-    body:Column(children: [Image.network(meal.imageUrl,
-    width: double.infinity,
-    fit: BoxFit.cover,
-         ),
-         const SizedBox(
-          height: 14,
-         ),
-         Text(
-          'Ingredients', 
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          color: Theme.of(context).colorScheme.onPrimary,
-          fontWeight: FontWeight.bold,
-         ),
-         ),
-         const SizedBox(
-          height: 24,
+      title: Text(meal.title),//haetaan meal objektista title
+      actions: [
+        IconButton( //TÄHÄN TULEE KETJUTUS FUNKTIOISTA ERI WIDGETTIEN KAUTTA YLLÄ FUNKTIO
+         //onpressed on PARAMETRI. sen oikealla puolella on meidän syöttämä argumentti
+          onPressed: (){
+            onToggleFavorite(meal); //TÄMÄ ON ARGUMENTTI(mitä yritetään antaa)
+          }, 
+          icon: const Icon(Icons.star)
           ),
-         //...meal.ingredients.map((e) => Text(e)).toList(), //näin voit tehdä listan inggredientseistä mappaamalla tai alla for luuppi
-         for(final ingredient in meal.ingredients) 
-         Text(
-          ingredient,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          ),
+      ]),
+    body:SingleChildScrollView(
+      child: Column(children: [Image.network(meal.imageUrl,
+      width: double.infinity,
+      fit: BoxFit.cover,
+           ),
            const SizedBox(
-          height: 14,
-         ),
-         Text(
-          'Steps', 
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          color: Theme.of(context).colorScheme.onPrimary,
-          fontWeight: FontWeight.bold,
-         ),
-         ),
-         const SizedBox(
-          height: 24,
-          ),
-         //...meal.ingredients.map((e) => Text(e)).toList(), //näin voit tehdä listan inggredientseistä mappaamalla tai alla for luuppi
-         for(final step in meal.steps) 
-         Text(
-          step,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          ),
+            height: 14,
+           ),
+           Text(
+            'Ingredients', 
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+           ),
+           ),
+           const SizedBox(
+            height: 24,
+            ),
+           //...meal.ingredients.map((e) => Text(e)).toList(), //näin voit tehdä listan inggredientseistä mappaamalla tai alla for luuppi
+           for(final ingredient in meal.ingredients) 
+           Text(
+            ingredient,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            ),
+             const SizedBox(
+            height: 14,
+           ),
+           Text(
+            'Steps', 
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+           ),
+           ),
+           const SizedBox(
+            height: 24,
+            ),
+           //...meal.ingredients.map((e) => Text(e)).toList(), //näin voit tehdä listan inggredientseistä mappaamalla tai alla for luuppi
+           for(final step in meal.steps)
 
-       ],
-      ),
+           Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12, 
+              vertical: 8,
+              ),
+             
+           child: Text(
+            step,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            ),
+             ),
+    
+         ],
+        ),
+    ),
     );
   }
 }
