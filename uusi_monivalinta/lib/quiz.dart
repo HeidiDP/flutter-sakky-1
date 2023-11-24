@@ -30,13 +30,14 @@ class QuizState extends State<Quiz> {
   }
   void chooseAnswer(String answer){
     selectedAnswer.add(answer);
-    if( selectedAnswer.length = questions.length){
+    if( selectedAnswer.length ==  questions.length){
       setState(() {
-        activeScreen = 'result-screen';
+        activeScreen = 'results-screen';
       });
     }
   }
-  
+  //TÄSTÄ VÄLISTÄ PUUTTUU VIELÄ RESTARTQUIZ FUNKTIO
+
   @override
   Widget build(context) {
 
@@ -47,10 +48,10 @@ class QuizState extends State<Quiz> {
     StartScreen(() {});
 
     if(activeScreen == 'question-screen'){
-      screenWidget = QuestionScreen(onSelectAnswer: 'choose-Answer',);
-    } else if (activeScreen = 'result-screen'){
+      screenWidget = QuestionScreen(onSelectAnswer: chooseAnswer,);
+    } else if (activeScreen = 'results-screen'){
       screenWidget = ResultScreen(
-        chosenAnswer: selectedAnswer,
+        chosenAnswers: selectedAnswers,
         onRestart: restartQuiz,
       );
     }
