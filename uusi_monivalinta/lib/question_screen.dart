@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:uusi_monivalinta/data/questions.dart';
 import 'package:uusi_monivalinta/answer_button.dart';
 
@@ -34,6 +35,10 @@ void answerQuestion(String selectedAnswer){
           children: [
             Text(
               currentQuestion.text,
+              style: GoogleFonts.quantico(color: Colors.black87,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox( height: 30,

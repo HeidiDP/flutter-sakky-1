@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uusi_monivalinta/data/questions.dart';
+import 'package:uusi_monivalinta/questions_summary/questions_summary.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key, required this.chosenAnswers, required this.onRestart});

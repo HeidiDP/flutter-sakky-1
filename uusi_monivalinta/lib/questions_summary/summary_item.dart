@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:uusi_monivalinta/questions_summary/questions_identifier.dart';
 
 class SummaryItem extends StatelessWidget{
-  const SummaryItem({super.key});
+  const SummaryItem(this.itemData, {super.key});
 
   final Map<String, Object> itemData;
 
@@ -26,6 +28,11 @@ class SummaryItem extends StatelessWidget{
             children: [
               Text(
                 itemData['question'] as String,
+                style: GoogleFonts.lato(
+                  color: Colors.black87,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 height: 5,

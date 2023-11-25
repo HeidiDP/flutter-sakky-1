@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uusi_monivalinta/start_screen.dart';
 import 'package:uusi_monivalinta/data/questions.dart';
 import 'package:uusi_monivalinta/question_screen.dart';
+import 'package:uusi_monivalinta/results_screen.dart';
 
 
 //statefulwidgetissä kaksi luokkaa (statea), vaihdettiin yksityinen luokka julkiseksi
@@ -18,7 +19,7 @@ class Quiz extends StatefulWidget {
 //2. luokka state
 class QuizState extends State<Quiz> {
 
-  List<String> selectedAnswer =[];
+  List<String> selectedAnswers =[];
   var activeScreen = 'start-screen';
 
 //funktio
@@ -29,14 +30,19 @@ class QuizState extends State<Quiz> {
     );
   }
   void chooseAnswer(String answer){
-    selectedAnswer.add(answer);
-    if( selectedAnswer.length ==  questions.length){
+    selectedAnswers.add(answer);
+    if( selectedAnswers.length ==  questions.length){
       setState(() {
         activeScreen = 'results-screen';
       });
     }
   }
-  //TÄSTÄ VÄLISTÄ PUUTTUU VIELÄ RESTARTQUIZ FUNKTIO
+ void restartQuiz(){
+  setState(() {
+    selectedAnswers = [];
+    activeScreen = 'question:screen';
+  });
+ }
 
   @override
   Widget build(context) {
@@ -49,7 +55,7 @@ class QuizState extends State<Quiz> {
 
     if(activeScreen == 'question-screen'){
       screenWidget = QuestionScreen(onSelectAnswer: chooseAnswer,);
-    } else if (activeScreen = 'results-screen'){
+    } else if (activeScreen == 'results-screen'){
       screenWidget = ResultScreen(
         chosenAnswers: selectedAnswers,
         onRestart: restartQuiz,
