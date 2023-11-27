@@ -9,8 +9,14 @@ import 'package:meals/models/meal.dart';
 
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.onToggleFavorite});  //KETJUTUS WIDGETTIEN VÄLILLÄ ETTÄ SUOSIKKI NAPPI TOIMISI
+  const CategoriesScreen({
+    super.key, 
+    required this.onToggleFavorite,
+    required this.availableMeals,
+    });  //KETJUTUS WIDGETTIEN VÄLILLÄ ETTÄ SUOSIKKI NAPPI TOIMISI
+
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal> availableMeals; //suodatetut ateriat
 
 //final activeScreen = 'start-screen';  ->tämä on movivalinnan vanha tapa vaihtaa näkymää
 
@@ -23,7 +29,7 @@ class CategoriesScreen extends StatelessWidget {
   //contains tutkii listan sisällön ja palauttaa true tai false, löytyykö haluttu parametri vai ei. tässä id perusteella.
   //otetaan talteen filteredMeals muutujaan kooko toimitus
   //pitää muuttaa vielä listaksi jonka vuoksi perässä on toList()
-  final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+  final filteredMeals = availableMeals.where((meal) => meal.categories.contains(category.id)).toList();
   
    // Navigator.push(context, route);
     Navigator.of(context).push(

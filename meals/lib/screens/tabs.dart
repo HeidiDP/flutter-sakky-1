@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/main_drawer.dart';
+import 'package:meals/screens/filters.dart';
+import 'package:meals/data/dummy_data.dart';
+
+//TABS ON KEHYS JONKA SISÄLLÄ ON CATEGORIES NÄKYMÄ
+
+
+//k on käytäntö flutterissa const arvoja varten
+const kInitialFilters = {
+  
+  //määritellääm kaikki falseksi ettei tule null ongelmia
+  Filter.glutenFree: false,
+  Filter.lactoseFree: false,
+  Filter.vegetarian:false,
+  Filter.vegan: false,
+};
+
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -14,7 +31,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
 int _selectedPageIndex = 0; //tämän perusteella näytetään oikea sivu
 final List<Meal> _favoriteMeals = [];
-
+Map<Filter, bool> _selectedFilters = kInitialFilters;
 //funktio/metodi = kaikki metodit ovat funktioita mutta vain luokan funktiot ovat metodeja
 //tällä luokan metodilla lisätään suosikkeihin ateria jos se ei ole jo siellä, jos on niin se poistetaan suosikeista
 void _toggleMealFavoriteStatus(Meal meal){ //FUNKTION LÄHDEPAIKKA ATERIAN LISÄYS TAI POISTO SUOSIKEISTA
@@ -49,11 +66,56 @@ void _selectPage(index){
   });
 }
 
+void _setScreen(String identifier) async {
+  Navigator.of(context).pop(); //sulkee drawerin ettei se ole "tiellä" kun palataan takaisin filtterivalikosta vaan menee suoraan categorioihin
+  if(identifier == 'Filters'){  
+    //tässä tabs jää odottamaan mitä filters palauttaa(yleinen esimerkki on datan haku tietokannsta)
+   final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      MaterialPageRoute(
+      builder:(ctx) => const FiltersScreen(),
+      ),
+      );
+      //jos arvo on resultissa tallennetaan se, tai stten oletuksena kinitialfilters jos result on null
+      _selectedFilters = result ?? kInitialFilters;
+  }
+  /* if(identifier == 'Filters'){
+   // Navigator.of(context).pop; //pushreplashment ei kerrytä stackeja päällekkäin vaan poistaa jos esim pakitat nuolella(voi sulkea koko ohjelman)
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+      builder:(ctx) => const FiltersScreen(),
+      ),
+      );
+  }*/
+}
+
 
   @override
   Widget build(BuildContext context) {
+    //lisätään muuttuja johon tallennetaan suodatettu aterialista käyttäjän valinnan perusteella
+    //where -> käydään läpi atriat joiden tagit vastaa käyttäjän valintaa
+    //where suorittaa funktion jossa on logiikka säilytetäänkö true elementti vai ei false
+    final availableMeals = dummyMeals.where((meal){
+      //jos käyttäjä on valinnut glutenfree &&(ja) ateria ei ole ! gluten free-> poistetaan ateria
+      //tutkitaan käyttäjän valinta ja mikä on aterian data
+      if(_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree){
+        return false;
+      }
+      if(_selectedFilters [Filter.lactoseFree]! && !meal.isLactoseFree){
+        return false;
+      }
+      if(_selectedFilters [Filter.vegetarian]! && !meal.isVegetarian){
+        return false;
+      }
+      if(_selectedFilters [Filter.vegan]! && !meal.isVegan){
+        return false;
+      }
+//kun kaikki suodattimet ollaan käyty läpi, lopuksi palautetaan ateria jos tänne on päästy ja ko filtteröity ateria on olemassa
+      return true;
+    }).toList();//iterable -> lista muotoon
+
     Widget activePage =  CategoriesScreen(
       onToggleFavorite: _toggleMealFavoriteStatus, //TÄSSÄ KETJUTUKSEN YKSI OSA
+      availableMeals: availableMeals,
     ); //oletuksena kategoriat
     var activePageTitle = 'Categories';
 
@@ -68,7 +130,7 @@ void _selectPage(index){
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer: MainDrawer(),
+      drawer: MainDrawer(onSelectScreen: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
