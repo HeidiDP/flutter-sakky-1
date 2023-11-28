@@ -11,11 +11,11 @@ import 'package:meals/models/meal.dart';
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key, 
-    required this.onToggleFavorite,
+    //required this.onToggleFavorite, KOMMENTOITI
     required this.availableMeals,
     });  //KETJUTUS WIDGETTIEN VÄLILLÄ ETTÄ SUOSIKKI NAPPI TOIMISI
 
-  final void Function(Meal meal) onToggleFavorite;
+  //final void Function(Meal meal) onToggleFavorite; //KOMMENTOITU
   final List<Meal> availableMeals; //suodatetut ateriat
 
 //final activeScreen = 'start-screen';  ->tämä on movivalinnan vanha tapa vaihtaa näkymää
@@ -37,10 +37,10 @@ class CategoriesScreen extends StatelessWidget {
       builder:(ctx) => MealsScreen(
         title: category.title, 
         meals: filteredMeals, 
-        onToggleFavorite: onToggleFavorite,), //TÄHÄN TARVITAAN KETJUTUKSETA VIELÄ PARAMETRI ontoggle...
+        //onToggleFavorite: onToggleFavorite, //TÄHÄN TARVITAAN KETJUTUKSETA VIELÄ PARAMETRI ontoggle...KOMMENTOITU TARKOITUKSELLA P0IS
+       ),
        ),
      );
-  }
   //flutterissa näkymät(screens) hallitaan stack:ssa, joka on pino näkymä objekteja(widgettejä)
   //pinon/stack korkein objekti näytetään käyttäjälle. 
   //esim tässä on pino:
@@ -50,7 +50,7 @@ class CategoriesScreen extends StatelessWidget {
 //vanhin on pohjalla uusin on päällä, puhs lisää näitä päällekkäin, päällimmäistä käsitellään aina ensin (LIFO) lastin first out 
 //aina lisätään päälle ja poistetaa päältä
 //push on lisäys, pop on poisto
-
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/providers/favorites_provider.dart';
 
-class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({super.key, required this.meal, required this.onToggleFavorite}); //NÄMÄ ON PARAMETREJA-> this.meal(mitä halutaan ottaa vastaan)
+class MealDetailsScreen extends ConsumerWidget {
+  const MealDetailsScreen({super.key, required this.meal, 
+  //required this.onToggleFavorite, KOMMENTOITU
+  }); //NÄMÄ ON PARAMETREJA-> this.meal(mitä halutaan ottaa vastaan)
 
 final Meal meal;
-final void Function(Meal meal) onToggleFavorite; //TÄMÄ FUNKTIO LISÄTTY MYÖS TÄNNE(KETJUTUS)
+//final void Function(Meal meal) onToggleFavorite; //TÄMÄ FUNKTIO LISÄTTY MYÖS TÄNNE(KETJUTUS) KOMMENTOITU POIS
 
   @override
-  Widget build(BuildContext context) {
+  //consumer widget tarvitsee buildiin erikseen ref parametrin
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold (
       appBar:AppBar(
       title: Text(meal.title),//haetaan meal objektista title
@@ -16,7 +21,18 @@ final void Function(Meal meal) onToggleFavorite; //TÄMÄ FUNKTIO LISÄTTY MYÖS
         IconButton( //TÄHÄN TULEE KETJUTUS FUNKTIOISTA ERI WIDGETTIEN KAUTTA YLLÄ FUNKTIO
          //onpressed on PARAMETRI. sen oikealla puolella on meidän syöttämä argumentti
           onPressed: (){
-            onToggleFavorite(meal); //TÄMÄ ON ARGUMENTTI(mitä yritetään antaa)
+            //read koska olemme funktion sisällä, watch aiheuttaisi ongelmia
+            
+           final wasAdded = ref
+            .read(favoriteMealsProvider.notifier)
+            .toggleMealFavoriteStatus(meal);
+            ScaffoldMessenger.of(context).clearSnackBars();//poistetaan vanha viesti
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(wasAdded ? 'Meal was added as favorite.' : 'Meal removed.'
+              ),
+            ),
+);
+            //onToggleFavorite(m;eal); //TÄMÄ ON ARGUMENTTI(mitä yritetään antaa)KOMMENTOITU POIS
           }, 
           icon: const Icon(Icons.star)
           ),

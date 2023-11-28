@@ -8,19 +8,34 @@ enum Filter{
   vegetarian,
   vegan,
 }
-
+//julkinen luokka
 class FiltersScreen extends StatefulWidget{
-  const FiltersScreen({super.key});
+  const FiltersScreen({super.key, required this.currentFilters});
+  
+//alla muuttuja jossa valitut filtteri
+  final Map <Filter, bool> currentFilters;  //kun tätä muuttujaa halutaa käyttää priva luokassa niin kts alla metodi
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
 }
+//privaatti luokka
 class _FiltersScreenState extends State<FiltersScreen>{
 
   var _glutenFreeFilterSet = false;
   var _lactoseFreeFilterSet = false;
   var _vegetarianFilterSet = false;
   var _veganFilterSet = false;
+
+  //widget käyettävissä vain jonkin metodin sisällä
+  //kun halutaan tuoda julkisesta luokasta muuttuja currentfilter niin tarvitaan alla oleva metodi että voidaan käyttää sitä privaluokassa
+@override
+void initState(){
+  super.initState();
+_glutenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
+_lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
+_vegetarianFilterSet = widget.currentFilters[Filter.vegetarian]!;
+_veganFilterSet = widget.currentFilters[Filter.vegan]!;
+}
 
   @override
   Widget build(BuildContext context){

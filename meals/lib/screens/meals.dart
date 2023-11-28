@@ -5,17 +5,23 @@ import 'package:meals/widgets/meal_item.dart';
 
 
 class MealsScreen extends StatelessWidget {   //1. tee luokka
-  const MealsScreen({super.key, this.title, required this.meals, required this.onToggleFavorite});             //2 tee constructori
+  const MealsScreen({super.key, 
+  this.title, 
+  required this.meals, 
+  //required this.onToggleFavorite
+  });             //2 tee constructori
 //poistetaan required titlen edestä, widgettiä voi käyttää joko titlellä tai ilman
 
 final String? title;         // tulee gategory griditem objetista , ?tarkoittaa että voi olla myös null
 final List<Meal> meals;     //tulee gategory griiditem objektista, tarvitaan lista meal objekteja
-final void Function(Meal meal) onToggleFavorite;
+//final void Function(Meal meal) onToggleFavorite;
 
 void selectMeal(context, Meal meal){
   Navigator.of(context).push(
     MaterialPageRoute( // TÄSSÄ ALLA KETJUTUS  JATKUU, TABS FILESTÄ TÄNNE JA TÄÄLTÄ SITTEN VIELÄ MEAL DETAILS FILEEN.(ketjutetaan screenistä toiseen)
-      builder: (ctx) => MealDetailsScreen(meal: meal, onToggleFavorite: onToggleFavorite, //lähetetään funktion argumenttina mealdetailsscreen widgettiin
+      builder: (ctx) => MealDetailsScreen(
+        meal: meal, 
+      //onToggleFavorite: onToggleFavorite, //lähetetään funktion argumenttina mealdetailsscreen widgettiin
       ),
       ),
   );
@@ -56,10 +62,12 @@ void selectMeal(context, Meal meal){
   );
  }
  
+ //jos katsotaan suosikkeja title on null eikä luoda uutta scaffoldia
 if(title == null){
   return content;
 }
 
+//tullaan katergian kautta ja palautetaan scaffold
   return Scaffold(                            //5. palautetaan jotain 
     appBar: AppBar(
       title: Text(title!),
