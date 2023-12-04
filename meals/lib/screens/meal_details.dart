@@ -14,15 +14,18 @@ final Meal meal;
   @override
   //consumer widget tarvitsee buildiin erikseen ref parametrin
   Widget build(BuildContext context, WidgetRef ref) {
+
+final favoriteMeals = ref.watch(favoriteMealsProvider);
+final isFavorite = favoriteMeals.contains(meal);
+
     return Scaffold (
       appBar:AppBar(
       title: Text(meal.title),//haetaan meal objektista title
       actions: [
-        IconButton( //TÄHÄN TULEE KETJUTUS FUNKTIOISTA ERI WIDGETTIEN KAUTTA YLLÄ FUNKTIO
+        IconButton( 
          //onpressed on PARAMETRI. sen oikealla puolella on meidän syöttämä argumentti
           onPressed: (){
-            //read koska olemme funktion sisällä, watch aiheuttaisi ongelmia
-            
+            //read koska olemme funktion sisällä, watch aiheuttaisi ongelmia           
            final wasAdded = ref
             .read(favoriteMealsProvider.notifier)
             .toggleMealFavoriteStatus(meal);
@@ -32,9 +35,9 @@ final Meal meal;
               ),
             ),
 );
-            //onToggleFavorite(m;eal); //TÄMÄ ON ARGUMENTTI(mitä yritetään antaa)KOMMENTOITU POIS
+            //onToggleFavorite(meal); //TÄMÄ ON ARGUMENTTI(mitä yritetään antaa)KOMMENTOITU POIS
           }, 
-          icon: const Icon(Icons.star)
+          icon: Icon( isFavorite? Icons.star : Icons.star_border),
           ),
       ]),
     body:SingleChildScrollView(
