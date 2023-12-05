@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/models/category.dart';
 
+
+//tässä on enumeraattiori käytössä eli tunnistaa categorien.vegetables 
 const categories = {
   Categories.vegetables: Category(
     'Vegetables',
@@ -10,12 +12,12 @@ const categories = {
     'Fruit',
     Color.fromARGB(255, 145, 255, 0),
   ),
-  Categories.meat: Category(
-    'Meat',
+  Categories.nomeat: Category(
+    'Protein',
     Color.fromARGB(255, 255, 102, 0),
   ),
-  Categories.dairy: Category(
-    'Dairy',
+  Categories.nodairy: Category(
+    'VeganDairy',
     Color.fromARGB(255, 0, 208, 255),
   ),
   Categories.carbs: Category(

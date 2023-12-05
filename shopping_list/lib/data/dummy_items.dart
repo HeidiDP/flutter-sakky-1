@@ -1,12 +1,13 @@
 import 'package:shopping_list/models/grocery_item.dart';
 import 'package:shopping_list/data/categories.dart';
+import 'package:shopping_list/models/category.dart';
 
-const groceryItems = [
+final  groceryItems = [
   GroceryItem(
       id: 'a',
-      name: 'Milk',
+      name: 'iKaffe',
       quantity: 1,
-      category: categories[Categories.dairy]!),
+      category: categories[Categories.nodairy]!),
   GroceryItem(
       id: 'b',
       name: 'Bananas',
@@ -14,7 +15,7 @@ const groceryItems = [
       category: categories[Categories.fruit]!),
   GroceryItem(
       id: 'c',
-      name: 'Beef Steak',
+      name: 'Vöner',
       quantity: 1,
-      category: categories[Categories.meat]!),
+      category: categories[Categories.nomeat]!),
 ];
