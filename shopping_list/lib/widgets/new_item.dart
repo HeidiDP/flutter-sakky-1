@@ -1,7 +1,13 @@
 //tässä tiedostossa on form  jolla käyttäjä voi lisätä uusia tuotteita ostoslistaan
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shopping_list/data/categories.dart';
+import 'package:shopping_list/models/grocery_item.dart';
+import 'package:shopping_list/models/category.dart';
+import 'package:http/http.dart' as http; //tallennetaan paketti muuttujaan joka sisältää kaiken paketin datan(vähänku objekti)
+
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -14,12 +20,45 @@ class _NewItemState extends State<NewItem> {
   //form tarvitsee globalkeyn
   final _formKey = GlobalKey<FormState>();
   var _enteredName = '';
+  var _enteredQuantity = 1;
+  var _selectedCategory = categories[Categories.vegetables]!;
 
 //lisätään metodin jonka tarkoitus on tallentaa käyttäjän lisäämä itemi(ELEVATED BUTTTONISSA KÄYTÖSSÄ)
-  void _saveItem(){
+  void _saveItem() async {
     if(
     _formKey.currentState!.validate()){ //suoritetaan kaikki validoinnit, ei tapahdu muuten automaattisesti
     _formKey.currentState!.save(); //suoritetaan save inputeissa
+    final url = Uri.https( //meidän database linkki alla
+      'flutter-test-2-6aa0c-default-rtdb.europe-west1.firebasedatabase.app',
+      'shoppin-list.json');
+    final response = await http.post(
+      url,
+      headers: {
+      'Content-Type': 'aplication/json',
+    },body: json.encode({  //json objekti {  }
+      'name': _enteredName, 
+      'quantity': _enteredQuantity, 
+      'category': _selectedCategory.title,   //pelkkä selectedcategory on itsessään objekti ja ei toimi yksinään, lisää title joten otetaan vain se talteen
+       },
+      ),
+    );
+    print(response.statusCode);
+    print(response.body);
+    
+    if(!context.mounted){
+        return;
+    }
+    Navigator.of(context).pop();
+
+    //Navigator.of(context).pop(
+      //luodaan uusi groceryitem objeksit joka palautetaan pop mukana grocerylist näkymään(missä push tapahtui)
+   // GroceryItem(
+     // id: DateTime.now().toString(), //väliaikainen ratkaisu id kohtaan
+    //  name: _enteredName, 
+    //  quantity: _enteredQuantity, 
+    //  category: _selectedCategory,
+   //     ),
+   //   );
     }
   }
 
@@ -107,7 +146,10 @@ class _NewItemState extends State<NewItem> {
                         ],
                       ),
                     ),
-                              ], onChanged: (data){}),
+                              ], onChanged: (data){
+                                //ei tarvitse set state
+                                _selectedCategory = data!;
+                              }),
                 )
             ],
            ),

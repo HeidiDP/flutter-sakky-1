@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping_list/models/category.dart';
 
 
+
 //tässä on enumeraattiori käytössä eli tunnistaa categorien.vegetables 
 const categories = {
   Categories.vegetables: Category(
