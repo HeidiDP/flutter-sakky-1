@@ -22,12 +22,16 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables]!;
+  var _isSending = false;
 
 //lisätään metodin jonka tarkoitus on tallentaa käyttäjän lisäämä itemi(ELEVATED BUTTTONISSA KÄYTÖSSÄ)
   void _saveItem() async {
-    if(
-    _formKey.currentState!.validate()){ //suoritetaan kaikki validoinnit, ei tapahdu muuten automaattisesti
+    if(_formKey.currentState!.validate()){ //suoritetaan kaikki validoinnit, ei tapahdu muuten automaattisesti
     _formKey.currentState!.save(); //suoritetaan save inputeissa
+    setState(() {
+      _isSending = true;
+    });
+
     final url = Uri.https( //meidän database linkki alla
       'flutter-test-2-6aa0c-default-rtdb.europe-west1.firebasedatabase.app',
       'shoppin-list.json');
@@ -42,23 +46,26 @@ class _NewItemState extends State<NewItem> {
        },
       ),
     );
+
+    final Map<String, dynamic> resData = json.decode(response.body);
+
     print(response.statusCode);
     print(response.body);
     
     if(!context.mounted){
         return;
     }
-    Navigator.of(context).pop();
+    //Navigator.of(context).pop();
 
-    //Navigator.of(context).pop(
+    Navigator.of(context).pop(
       //luodaan uusi groceryitem objeksit joka palautetaan pop mukana grocerylist näkymään(missä push tapahtui)
-   // GroceryItem(
-     // id: DateTime.now().toString(), //väliaikainen ratkaisu id kohtaan
-    //  name: _enteredName, 
-    //  quantity: _enteredQuantity, 
-    //  category: _selectedCategory,
-   //     ),
-   //   );
+    GroceryItem(
+      id: resData['name'], //id tulee vastauksena palvelimelta
+      name: _enteredName, 
+      quantity: _enteredQuantity, 
+      category: _selectedCategory,
+       ),
+      );
     }
   }
 
@@ -104,7 +111,7 @@ class _NewItemState extends State<NewItem> {
                       label: Text('Quantity'),                   
                     ),
                     //initailvalue on määritelty arvo kentässä
-                    initialValue: '1', //string muodossa aina formit vaikka on luku kyseessä
+                    initialValue: _enteredQuantity.toString(), //string muodossa aina formit vaikka on luku kyseessä
                     //validoidaan että saadaan oikeanlainen arvo kenttään ja että sitä voi käyttää kentässä
                      validator: (value){
                 //if tarkistaa onko käyttäjän syötää data hyväksyttävää
@@ -117,8 +124,12 @@ class _NewItemState extends State<NewItem> {
                 }
                 return null; //ei ole virhettä
               },
+              onSaved: (value){
+                _enteredQuantity = int.parse(value!);
+              },),
                   ),
-                ),
+          ],
+          ),
                 const SizedBox(
                   width: 8,
                   ),
@@ -150,30 +161,41 @@ class _NewItemState extends State<NewItem> {
                                 //ei tarvitse set state
                                 _selectedCategory = data!;
                               }),
-                )
-            ],
-           ),
+                ),
+           
            const SizedBox( 
             width: 12,
+            height: 12,
            ),
            //NAPIT RIVILLE (reset ja save)
            Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                onPressed: (){_formKey.currentState!.reset(); 
+                onPressed: _isSending 
+                ? null 
+                : (){
+                _formKey.currentState!.reset(); 
                 },
                 child: const Text('Reset'),
               ),
               ElevatedButton(
-                onPressed: _saveItem, 
-                child: const Text('Save item'),
+                onPressed: _isSending ? null : _saveItem, 
+                child: _isSending
+                ? const SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: CircularProgressIndicator()
+                ,)
+                : const Text('Add Item'),
+                 
               )
             ],) 
-         ],
+         
+            ],
       ),
       ),
-    ),
-  );
+    ));
+  
   }
 }

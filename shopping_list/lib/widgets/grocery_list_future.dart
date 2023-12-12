@@ -6,14 +6,14 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shopping_list/data/categories.dart';
 
-class GroceryList extends StatefulWidget {
-  const GroceryList({super.key});
+class GroceryListFuture extends StatefulWidget {
+  const GroceryListFuture({super.key});
 
   @override
-  State<GroceryList> createState() => _GroceryListState();
+  State<GroceryListFuture> createState() => _GroceryListState();
 }
 
-class _GroceryListState extends State<GroceryList> {
+class _GroceryListState extends State<GroceryListFuture> {
   List<GroceryItem> _groceryItems = [];
   var _isLoading = true;
   String? _error = null;
@@ -108,7 +108,7 @@ void _removeItem(GroceryItem item) async {
   final url = Uri.https(
     'flutter-test-2-6aa0c-default-rtdb.europe-west1.firebasedatabase.app',
     'shopping-list/${item.id}.json');
-
+    
 //TODO LISÄÄ TRY CATCH
    final response = await http.delete(url);
 
@@ -134,7 +134,7 @@ if(_isLoading){
 }
 
 if(_groceryItems.isNotEmpty){
-content = ListView.builder(
+ListView.builder(
         itemCount: _groceryItems.length, //count joka laskee montako tuotetta on
         //nuolifunktio palauttaa listtilen
         itemBuilder: (cxt, index) => Dismissible(
