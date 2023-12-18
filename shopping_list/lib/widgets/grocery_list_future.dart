@@ -15,17 +15,21 @@ class GroceryListFuture extends StatefulWidget {
 
 class _GroceryListState extends State<GroceryListFuture> {
   List<GroceryItem> _groceryItems = [];
-  var _isLoading = true;
-  String? _error = null;
+ 
+  //muuttuja jossa on tietokannasta haetut tavarat
+  late Future<List<GroceryItem>> _loadedItems;
+  //late, luvataan kääntäjälle että ladataan muuttujaan data een kuin sitä käytetäänn build funktiossa
+  //widget elinkaaressa initstate()->build()
 
   @override
   //haetaan tuotteet tietokannasta, tapahtuu tässä initstatessa
   initState(){
     super.initState();
-    _loadItems();
+    _loadedItems = _loadItems();
   }
 
-  void _loadItems() async {
+  //metodi on async, se palautaa datan futre muodossa
+  Future<List<GroceryItem>> _loadItems() async {
     final url = Uri.https( //meidän database linkki alla
       'flutter-test-2-6aa0c-default-rtdb.europe-west1.firebasedatabase.app',
       'shoppin-list.json');
@@ -35,17 +39,20 @@ class _GroceryListState extends State<GroceryListFuture> {
       //throw Exeption('An error occured!');
       //tämä trycatch pitäisi lisätä joka paikkaan missä käytettään http metodeja
 
-try{
+
 final response = await http.get(url);
 if(response.statusCode >= 400){
-  _error = 'Failed to fetch data. Please try again later!';
+ //setState(() {
+  // _error = 'Failed to fetch data. Please try again later!';
+// }); 
+//heitetään virhe joka käsitellään futurebuild snapshotissa
+throw Exception('Failed to fetch items!');
 }
 
-if(response.body == 'null'){
-  setState(() {
-    _isLoading = false;
-  });
-  return;
+var testForNull = json.decode(response.body);
+if(testForNull == null){
+  
+  return [];
 }
 
 final Map<String, dynamic> listData = json.decode(response.body);
@@ -66,15 +73,9 @@ loadedItems.add(GroceryItem(
     ),
   );
 }
-setState(() {
-  _groceryItems = loadedItems;
-  _isLoading =false;
-});
-}catch(error){
-  setState(() {
-    _error = 'Something went wrong! $error';
-    });
-  }
+
+return loadedItems;
+
 }
 
 //tehdään funktio jota käytetää iconbuttonissa lisäämään uusi tuote-> siirrytään new_icon näkymään
@@ -122,48 +123,6 @@ if(response.statusCode >= 400){
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Center(
-    child: Text('No items added yet.'),
-);
-
-//jos ladataan tietokannasta dataa
-if(_isLoading){
-  content = const Center(
-    child: CircularProgressIndicator(),
-    );
-}
-
-if(_groceryItems.isNotEmpty){
-ListView.builder(
-        itemCount: _groceryItems.length, //count joka laskee montako tuotetta on
-        //nuolifunktio palauttaa listtilen
-        itemBuilder: (cxt, index) => Dismissible(
-          onDismissed: (direction){
-            _removeItem(_groceryItems[index]);
-          },
-        key: ValueKey(_groceryItems[index].id),
-        child: ListTile(
-        //ListTile widgettiin generoidaan tuotteet dummyitem  tiedostosta
-        title: Text(_groceryItems[index].name),
-        leading: Container(
-          width: 24,
-          height: 24,
-          color: _groceryItems[index].category.color,
-        ),
-        trailing: Text(
-          _groceryItems[index].quantity.toString(),
-          ),
-         ),  
-        ),   
-      );
-}
-
-if(_error != null){
-   Center(
-    child: Text(_error!),
-);
-}
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your groceries'),
@@ -175,7 +134,54 @@ if(_error != null){
           ),
           ],
       ),
-      body: content,
+      body: FutureBuilder(future: _loadedItems, builder: (context, snapshot){
+        //täällä snapshotin tilanteen perusteella generoidaan eri widget rakenne
+        if(snapshot.connectionState == ConnectionState.waiting){
+          //snapshot odottaa dataa, näytetään spinner
+          return const Center(
+            child:  CircularProgressIndicator(),
+          );
+        }
+      //virhetilanne
+        if(snapshot.hasError){
+          return Center(
+          child: Text(snapshot.error.toString()),
+          );
+        }
+      //tyhjä lista, data on haettu ja siinä on tyhjä lista
+        if (snapshot.data!.isEmpty){
+            const Center(
+        child: Text('No items added yet.'),
+         );
+        }
+
+        // oletuksena lopuksi , näytetään käyttäjän tuotteet
+        return ListView.builder(
+        itemCount: snapshot.data!.length, //count joka laskee montako tuotetta on
+        //nuolifunktio palauttaa listtilen
+        itemBuilder: (cxt, index) => Dismissible(
+          onDismissed: (direction){
+            _removeItem(snapshot.data![index]);
+          },
+        key: ValueKey(snapshot.data![index].id),
+        child: ListTile(
+        //ListTile widgettiin generoidaan tuotteet dummyitem  tiedostosta
+        title: Text(snapshot.data![index].name),
+        leading: Container(
+          width: 24,
+          height: 24,
+          color: snapshot.data![index].category.color,
+        ),
+        trailing: Text(
+          snapshot.data![index].quantity.toString(),
+          ),
+         ),  
+        ),   
+      );
+      }),
+          //tässä suoritetaan loaditems metodi joka palauttaa futuurin
+          //nyt tieto haetaan tietokannasta, joka kerta kun build suoritetaan , tämä aiheuttaa turhaa tietokantakutsua
+        //FutureBuilder(future: _loadItems(), builder: (context, snapshot){}),
     );
   }
 }
