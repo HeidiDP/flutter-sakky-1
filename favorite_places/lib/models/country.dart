@@ -1,4 +1,4 @@
-class Country { //alla konstruktori jossa properteja
+class Country { 
   const Country({
     required this.id,
     required this.title,
