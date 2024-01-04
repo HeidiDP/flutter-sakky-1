@@ -10,4 +10,21 @@ class PlacesScreen extends ConsumerStatefulWidget{
   @override
   ConsumerState<PlacesScreen> createState() => _PlacesScreenState();
 }
-class _PlacesScreenState extends ConsumerState<PlacesScreen>{};
+class _PlacesScreenState extends ConsumerState<PlacesScreen>{
+@override
+Widget build(BuildContext context) {
+  return GridView(
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2,
+    childAspectRatio: 3/2,
+    crossAxisSpacing: 20,
+    mainAxisSpacing: 20,
+    ),
+    children: [
+      for (final place in availablePlaces)
+      const Text('maanosa'),
+    ],
+    );
+}
+}
+
