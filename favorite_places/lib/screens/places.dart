@@ -6,11 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlacesScreen extends ConsumerStatefulWidget{
   const PlacesScreen({super.key});
+  
 
   @override
   ConsumerState<PlacesScreen> createState() => _PlacesScreenState();
 }
 class _PlacesScreenState extends ConsumerState<PlacesScreen>{
+  
+final List<String> availablePlaces = ['kdjlfds'];
+
 @override
 Widget build(BuildContext context) {
   return GridView(
