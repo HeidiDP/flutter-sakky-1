@@ -3,32 +3,42 @@ import 'package:favorite_places/data/dummy_data.dart';
 import 'package:favorite_places/models/country.dart';
 import 'package:favorite_places/models/place.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:favorite_places/widgets/places_list.dart';
+import 'package:favorite_places/providers/user_places.dart';
+import 'package:favorite_places/screens/add_place.dart';
 
-class PlacesScreen extends ConsumerStatefulWidget{
+//riverpod tarvitsee providerin(esim mainissa paketoidaan sillä, lisäksi Notifierin(tee provider kansio ja sinne luokka) 
+//sekä Consumerwidgetin pää luokkiin esim screenwidgettiin)
+
+class PlacesScreen extends ConsumerWidget{
   const PlacesScreen({super.key});
-  
-
-  @override
-  ConsumerState<PlacesScreen> createState() => _PlacesScreenState();
-}
-class _PlacesScreenState extends ConsumerState<PlacesScreen>{
-  
-final List<String> availablePlaces = ['kdjlfds'];
 
 @override
-Widget build(BuildContext context) {
-  return GridView(
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 2,
-    childAspectRatio: 3/2,
-    crossAxisSpacing: 20,
-    mainAxisSpacing: 20,
-    ),
-    children: [
-      for (final place in availablePlaces)
-      const Text('maanosa'),
-    ],
+Widget build(BuildContext context, WidgetRef ref){
+  final userPlaces = ref.watch(userPlacesProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('ÿour places'),
+        actions: [
+          IconButton(
+            //voisi luoda uuden metodin, joka avaa lisäys sivun
+            //_addPLace();
+            
+            onPressed: (){
+              Navigator.of(context).push(
+              
+              MaterialPageRoute(builder: (context) => const AddPlaceScreen(),
+              ),
+            );
+            }, 
+            icon: const Icon(Icons.add),
+            ),
+        ],
+      ),
+      
+      body: PlacesList(places: userPlaces),
     );
-}
+    }
 }
 

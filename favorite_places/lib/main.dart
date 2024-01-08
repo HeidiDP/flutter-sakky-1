@@ -2,6 +2,8 @@ import 'package:favorite_places/screens/places.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+//riverpod tarvitsee providerin(esim mainissa paketoidaan sillä, lisäksi Notifierin(tee provider kansio ja sinne luokka) 
+//sekä Consumerwidgetin pää luokkiin esim screenwidgettiin)
 
 
 final colorSchema = ColorScheme.fromSeed(
