@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:favorite_places/data/dummy_data.dart';
-import 'package:favorite_places/models/country.dart';
-import 'package:favorite_places/models/place.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:favorite_places/widgets/places_list.dart';
 import 'package:favorite_places/providers/user_places.dart';
 import 'package:favorite_places/screens/add_place.dart';
+
 
 //riverpod tarvitsee providerin(esim mainissa paketoidaan sillä, lisäksi Notifierin(tee provider kansio ja sinne luokka) 
 //sekä Consumerwidgetin pää luokkiin esim screenwidgettiin)
@@ -37,7 +35,10 @@ Widget build(BuildContext context, WidgetRef ref){
         ],
       ),
       
-      body: PlacesList(places: userPlaces),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: PlacesList(places: userPlaces),
+      ),
     );
     }
 }

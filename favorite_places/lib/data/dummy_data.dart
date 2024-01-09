@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:favorite_places/models/place.dart';
-import 'package:favorite_places/models/country.dart';
+//import 'package:flutter/material.dart';
+//import 'package:favorite_places/models/place.dart';
+//import 'package:favorite_places/models/country.dart';
 
-const continents = [
+/*const continents = [
 
 Place(
     id: 'p1',
@@ -68,4 +68,4 @@ const countries = [
     title: 'Etelämanner',
   ),
   
-];
+];*/
