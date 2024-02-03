@@ -18,20 +18,25 @@ class MyApp extends StatelessWidget {
 }
 
 class MaintenanceForm extends StatefulWidget {
+    const MaintenanceForm({super.key}); //tämä on lisätty tätä ei ollut alkuperöisessä
+
   @override
-  _MaintenanceFormState createState() => _MaintenanceFormState();
+  State<MaintenanceForm> createState() => _MaintenanceFormState(); // tässä alkuperäinen oli: _MaintenanceFormState createState() => _MaintenanceFormState();
 }
 
 class _MaintenanceFormState extends State<MaintenanceForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _apartmentNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Huoltoilmoitus'),
+        title: const Text('Huoltoilmoitus'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,7 +47,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
             children: <Widget>[
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Nimi',
                 ),
                 validator: (value) {
@@ -52,11 +57,11 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _descriptionController,
                 maxLines: 5,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Kuvaus',
                 ),
                 validator: (value) {
@@ -67,13 +72,53 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                 },
               ),
               const SizedBox(height: 16),
+              TextFormField(
+                controller: _addressController,
+                decoration: const InputDecoration(
+                  labelText: 'Osoite',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Syötä osoite';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _phoneNumberController,
+                decoration: const InputDecoration(
+                  labelText: 'Puhelinnumero',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Syötä puhelinnumero';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _apartmentNumberController,
+                decoration: const InputDecoration(
+                  labelText: 'Asunnonnumero',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Syötä asunnonnumero';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Tässä voit lisätä logiikan huoltoilmoituksen lähettämiseksi
                     // esimerkiksi HTTP-pyyntö, tietokantaan tallennus jne.
-                    // Käytä _nameController.text ja _descriptionController.text
-                    // saadaksesi käyttäjän syöttämät tiedot.
+                    // Käytä _nameController.text, _descriptionController.text,
+                    // _addressController.text, _phoneNumberController.text ja
+                    // _apartmentNumberController.text saadaksesi käyttäjän syöttämät tiedot.
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Huoltoilmoitus lähetetty')),
                     );
