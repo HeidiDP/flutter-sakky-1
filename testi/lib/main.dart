@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MaintenanceForm(),
+      home: const MaintenanceForm(),
     );
   }
 }
@@ -26,11 +26,11 @@ class MaintenanceForm extends StatefulWidget {
 
 class _MaintenanceFormState extends State<MaintenanceForm> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _apartmentNumberController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _apartmentNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,95 +38,97 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
       appBar: AppBar(
         title: const Text('Huoltoilmoitus'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Nimi',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nimi',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Syötä nimesi';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Syötä nimesi';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _descriptionController,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  labelText: 'Kuvaus',
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _descriptionController,
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                    labelText: 'Kuvaus',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Syötä huoltoilmoituksen kuvaus';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Syötä huoltoilmoituksen kuvaus';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _addressController,
-                decoration: const InputDecoration(
-                  labelText: 'Osoite',
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _addressController,
+                  decoration: const InputDecoration(
+                    labelText: 'Osoite',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Syötä osoite';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Syötä osoite';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _phoneNumberController,
-                decoration: const InputDecoration(
-                  labelText: 'Puhelinnumero',
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _phoneNumberController,
+                  decoration: const InputDecoration(
+                    labelText: 'Puhelinnumero',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Syötä puhelinnumero';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Syötä puhelinnumero';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _apartmentNumberController,
-                decoration: const InputDecoration(
-                  labelText: 'Asunnonnumero',
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _apartmentNumberController,
+                  decoration: const InputDecoration(
+                    labelText: 'Asunnonnumero',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Syötä asunnonnumero';
+                    }
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Syötä asunnonnumero';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Tässä voit lisätä logiikan huoltoilmoituksen lähettämiseksi
-                    // esimerkiksi HTTP-pyyntö, tietokantaan tallennus jne.
-                    // Käytä _nameController.text, _descriptionController.text,
-                    // _addressController.text, _phoneNumberController.text ja
-                    // _apartmentNumberController.text saadaksesi käyttäjän syöttämät tiedot.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Huoltoilmoitus lähetetty')),
-                    );
-                  }
-                },
-                child: const Text('Lähetä'),
-              ),
-            ],
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Tässä voit lisätä logiikan huoltoilmoituksen lähettämiseksi
+                      // esimerkiksi HTTP-pyyntö, tietokantaan tallennus jne.
+                      // Käytä _nameController.text, _descriptionController.text,
+                      // _addressController.text, _phoneNumberController.text ja
+                      // _apartmentNumberController.text saadaksesi käyttäjän syöttämät tiedot.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Huoltoilmoitus lähetetty')),
+                      );
+                    }
+                  },
+                  child: const Text('Lähetä'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
