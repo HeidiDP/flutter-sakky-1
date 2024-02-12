@@ -9,8 +9,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Huoltoilmoituslomake',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 19, 30, 34),
+          brightness: Brightness.dark,
+           surface: const Color.fromARGB(255, 0, 178, 233), //tai fromARGB(255, 1, 65, 85)
+        ),
+       scaffoldBackgroundColor: Theme.of(context).colorScheme.onSurface,
       ),
       home: const MaintenanceForm(),
     );

@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+
+final _firebase  = FirebaseAuth.instance; //ONKO TÄMÄ NÄIN? TARKISTA
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -18,10 +22,34 @@ var _enteredPassword = '';
 
 void _submit(){
  final isValid = _formKey.currentState!.validate();
- if(isValid){
+
+ if(!isValid){
+  return;
+ }
   _formKey.currentState!.save();
 
+try{
+  if(!_isLogin){
+    
+final userCredential = await _firebase.createUserWithsEmailAndPassword(
+      email:_enteredEmail, password: _enteredPassword);
 
+    }else{
+    final UserCredential = await _firebase.signInWithEmailAndPasswod(
+       email:_enteredEmail, password: _enteredPassword);
+   }// else päättyy
+
+      on FirebaseAuthException catch  (error){
+    if(error.code == 'email-already-in-use'){
+
+    }
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(error.message ?? 'Autentication failed'),
+      ),
+    );
+   }
+  }
  }
 }
 
