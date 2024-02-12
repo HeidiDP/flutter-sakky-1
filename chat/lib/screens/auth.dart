@@ -20,8 +20,7 @@ void _submit(){
  final isValid = _formKey.currentState!.validate();
  if(isValid){
   _formKey.currentState!.save();
-  print(_enteredEmail);
-  print(_enteredPassword);
+
 
  }
 }
