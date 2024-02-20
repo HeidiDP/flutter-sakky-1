@@ -26,7 +26,7 @@ if(pickedImage == null){
 }
 
   setState(() {
-    _pickedImageFile = File(pickedImage.path)
+    _pickedImageFile = File(pickedImage.path);
   });
 }
 
