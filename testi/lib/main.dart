@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testi/pesukone_kalenteri.dart';
 
 void main() {
   runApp(MyApp());
@@ -133,10 +134,21 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                   },
                   child: const Text('Lähetä'),
                 ),
+                TextButton.icon(
+              icon: const Icon(Icons.build),
+              label: const Text('Huoltoilmoitus'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PesukoneKalenteri()),
+                );
+              }),
               ],
             ),
           ),
         ),
+        
       ),
     );
   }
