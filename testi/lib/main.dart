@@ -136,7 +136,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                 ),
                 TextButton.icon(
               icon: const Icon(Icons.build),
-              label: const Text('Huoltoilmoitus'),
+              label: const Text('Kalenteri'),
               onPressed: () {
                 Navigator.push(
                   context,
