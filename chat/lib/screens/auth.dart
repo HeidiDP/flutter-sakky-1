@@ -1,3 +1,5 @@
+import 'dart:io'; //file luokka
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:chat/widgets/user_image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,25 +22,41 @@ class _AuthScreenState extends State<AuthScreen> {
 
   var _enteredEmail = '';
   var _enteredPassword = '';
+  File ? _selectedImage;
+  var _isAutheticating = false;
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid || !_isLogin && _selectedImage == null) {
+      //virheilmoitus...
       return; // Lopetetaan suoritus, jos data ei ole validi
     }
-
+    
     // Suorittaa FormField:n save metodin
     _formKey.currentState!.save();
 
     try {
+      setState(() {
+        _isAutheticating = true;
+      });
       if (!_isLogin) {
         // Rekisteröinti
 
-        // Yritetään suorittaa koodi
+        // Yritetään suorittaa koodi(luodaan käyttäjä)
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
         //print(userCredentials);
+
+        //jotta kuva voidaan talllentaa, ensin tulee luoda käyttäjä
+        //josa päästään tähän käyttäjän luonti on onnistunu. 
+        final storageRef = FirebaseStorage.instance
+        .ref().child('user_images')
+        .child('${userCredentials.user!.uid}.jpg');
+
+        await storageRef.putFile(_selectedImage!); //tässä kuva tallentuu tietokantaan
+       final imageUrl = await storageRef.getDownloadURL();
+
       } else {
         // Kirjautuminen
 
@@ -59,6 +77,9 @@ class _AuthScreenState extends State<AuthScreen> {
           // Jos error.message == null, teksti = 'Authentication failed!'
         ),
       );
+      setState(() {
+        _isAutheticating = false;
+      });
     }
   }
 
@@ -82,7 +103,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if(!_isLogin)
-                        UserImagePicker(),
+                        UserImagePicker(onPickImage: (pickedImage){
+                        _selectedImage = pickedImage;
+                        }),
                         TextFormField(
                           decoration:
                               const InputDecoration(labelText: 'Email Address'),
@@ -122,12 +145,16 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(
                           height: 12,
                         ),
+                        if(_isAutheticating)
+                        const CircularProgressIndicator(),
+                        if(!_isAutheticating)
                         ElevatedButton(
                           onPressed: _submit,
                           child: Text(
                             _isLogin ? 'Login' : 'Signup',
                           ),
                         ),
+                        if(!_isAutheticating)
                         TextButton(
                           onPressed: () {
                             setState(() {

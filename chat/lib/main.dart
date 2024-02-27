@@ -1,5 +1,6 @@
 import 'package:chat/screens/auth.dart';
 import 'package:chat/screens/chat.dart';
+import 'package:chat/screens/rt_stream.dart';
 import 'package:chat/screens/rt_test.dart';
 import 'package:chat/screens/rt_test2.dart';
 import 'package:chat/screens/splash.dart';
@@ -36,9 +37,10 @@ class App extends StatelessWidget {
         }
 
         if(snapshot.hasData){
-          return const RtTest2Screen();
-          //return const ChatScreen();
+          //return const RtTest2Screen();
+          return const ChatScreen();
           //return const RtTestScreen();
+          //return const RtStreamScreen();
         }
         return const AuthScreen();
       }),
